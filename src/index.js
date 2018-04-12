@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import isUndefined from 'lodash/isUndefined'
 import isFunction from 'lodash/isFunction'
+import jsonStringifySafe from 'json-stringify-safe'
 
 function fetchRequest(context) {
   if (
@@ -44,9 +45,8 @@ export default class EvidenceClient {
 
     this.request({
       url,
-      data: JSON.stringify(evidence),
-      timeout: 3000,
-      attempts: 3,
+      data: jsonStringifySafe(evidence),
+      method: 'put',
       dataType: 'raw',
       cache: true,
       responseType: 'text',
