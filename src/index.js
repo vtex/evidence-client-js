@@ -8,28 +8,28 @@ function fetchRequest(context) {
     (!isUndefined(window) && !isFunction(window.fetch)) ||
     (!isUndefined(global) && !isFunction(global.fetch))
   ) {
-    console.error('Evidence Client: Error, using fetchRequest without fetch object');
-    return null;
+    console.error('Evidence Client: Error, using fetchRequest without fetch object')
+    return null
   }
 
   return fetch(context.url, {
     ...context,
-    body: context.data
+    body: context.data,
   }).then(response => {
     if (context.responseType === 'json') {
-      return response.json();
+      return response.json()
     }
-    return response;
-  });
+    return response
+  })
 }
 
-export function generateEvidenceHash(object) {
-  return md5(JSON.stringify(object))
+function generateEvidenceHash(object) {
+  return md5(jsonStringifySafe(object))
 }
 
 const EVIDENCE_SERVER_ENDPOINT = '/api/Evidence?application=instore'
 
-export default class EvidenceClient {
+class EvidenceClient {
   config(config) {
     this.request = (!isUndefined(config.request) ? config.request : this.request) || fetchRequest
   }
@@ -47,6 +47,7 @@ export default class EvidenceClient {
       url,
       data: jsonStringifySafe(evidence),
       method: 'put',
+      timeout: 5000,
       dataType: 'raw',
       cache: true,
       responseType: 'text',
@@ -55,3 +56,5 @@ export default class EvidenceClient {
     return hash
   }
 }
+
+export default EvidenceClient
