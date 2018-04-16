@@ -27,3 +27,7 @@ node_modules
 .babelrc
 .eslintrc
 src
+
+webpack.config.babel.js
+yarn.lock
+./index.js
