@@ -1,6 +1,6 @@
 {
   "name": "@vtex/evidence-client-js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Javascript lib to add evidences to the evidence server",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -10,6 +10,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -21,7 +22,6 @@
     "webpack-cli": "^2.0.9"
   },
   "dependencies": {
-    "babel-eslint": "^8.2.2",
     "json-stringify-safe": "^5.0.1",
     "md5": "^2.2.1"
   },
