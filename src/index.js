@@ -27,19 +27,19 @@ function generateEvidenceHash(object) {
   return md5(jsonStringifySafe(object))
 }
 
-const EVIDENCE_SERVER_ENDPOINT = '/api/Evidence?application=instore'
+const EVIDENCE_SERVER_ENDPOINT = '/api/Evidence?application='
 
 class EvidenceClient {
   config(config) {
     this.request = (!isUndefined(config.request) ? config.request : this.request) || fetchRequest
   }
 
-  sendEvidence(evidence) {
+  sendEvidence(application, evidence) {
     if (process.env.NODE_ENV === 'development') {
       return 'development'
     }
 
-    let url = EVIDENCE_SERVER_ENDPOINT
+    let url = EVIDENCE_SERVER_ENDPOINT + application
     const hash = generateEvidenceHash(evidence)
     url = `${url}&hash=${hash}`
 
