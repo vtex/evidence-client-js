@@ -1,6 +1,6 @@
 {
   "name": "@vtex/evidence-client-js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Javascript lib to add evidences to the evidence server",
   "main": "dist/index.js",
   "module": "dist/index.js",
