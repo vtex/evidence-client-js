@@ -51,6 +51,9 @@ class EvidenceClient {
       dataType: 'raw',
       cache: true,
       responseType: 'text',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
     })
 
     return hash
