@@ -1,5 +1,6 @@
 import md5 from 'md5'
 import isUndefined from 'lodash/isUndefined'
+import get from 'lodash/get'
 import isFunction from 'lodash/isFunction'
 import jsonStringifySafe from 'json-stringify-safe'
 
@@ -32,7 +33,7 @@ const EVIDENCE_SERVER_ENDPOINT = '/api/Evidence?application='
 class EvidenceClient {
   config(config) {
     this.request = (!isUndefined(config.request) ? config.request : this.request) || fetchRequest
-    this.expirationInSeconds = config.expirationInSeconds
+    this.expirationInSeconds = get(config, 'expirationInSeconds')
   }
 
   sendEvidence(application, evidence, expirationInSeconds) {
@@ -43,11 +44,18 @@ class EvidenceClient {
     let url = EVIDENCE_SERVER_ENDPOINT + application
     const hash = generateEvidenceHash(evidence)
     url = `${url}&hash=${hash}`
-    const params = expirationInSeconds
-      ? { expirationInSeconds }
-      : this.expirationInSeconds
-      ? { expirationInSeconds: this.expirationInSeconds }
-      : {}
+
+    const hasExpirationGlobalSetting = !isUndefined(this.expirationInSeconds)
+    const hasExpirationArgumentSetting = !isUndefined(expirationInSeconds)
+
+    let params = {}
+    if( hasExpirationArgumentSetting ) {
+      params = { expirationInSeconds }
+    } else {
+      if( hasExpirationGlobalSetting ) {
+        params = { expirationInSeconds: this.expirationInSeconds }
+      }
+    }
 
     this.request({
       url,
