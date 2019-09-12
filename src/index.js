@@ -32,9 +32,10 @@ const EVIDENCE_SERVER_ENDPOINT = '/api/Evidence?application='
 class EvidenceClient {
   config(config) {
     this.request = (!isUndefined(config.request) ? config.request : this.request) || fetchRequest
+    this.expirationInSeconds = config.expirationInSeconds
   }
 
-  sendEvidence(application, evidence) {
+  sendEvidence(application, evidence, expirationInSeconds) {
     if (process.env.NODE_ENV === 'development') {
       return 'development'
     }
@@ -42,6 +43,11 @@ class EvidenceClient {
     let url = EVIDENCE_SERVER_ENDPOINT + application
     const hash = generateEvidenceHash(evidence)
     url = `${url}&hash=${hash}`
+    const params = expirationInSeconds
+      ? { expirationInSeconds }
+      : this.expirationInSeconds
+      ? { expirationInSeconds: this.expirationInSeconds }
+      : {}
 
     this.request({
       url,
@@ -54,6 +60,7 @@ class EvidenceClient {
       headers: {
         'Content-Type': 'text/plain'
       },
+      params,
     })
 
     return hash
