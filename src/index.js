@@ -49,10 +49,10 @@ class EvidenceClient {
     const hasExpirationArgumentSetting = !isUndefined(expirationInSeconds)
 
     let params = {}
-    if( hasExpirationArgumentSetting ) {
+    if (hasExpirationArgumentSetting) {
       params = { expirationInSeconds }
     } else {
-      if( hasExpirationGlobalSetting ) {
+      if (hasExpirationGlobalSetting) {
         params = { expirationInSeconds: this.expirationInSeconds }
       }
     }
@@ -66,7 +66,7 @@ class EvidenceClient {
       cache: true,
       responseType: 'text',
       headers: {
-        'Content-Type': 'text/plain'
+        'Content-Type': 'text/plain',
       },
       params,
     })
