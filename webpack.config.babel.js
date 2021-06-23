@@ -7,6 +7,7 @@ export default {
     filename: 'index.js',
     library: 'evidence-client',
     libraryTarget: 'umd',
+    globalObject: 'this',
   },
   externals: {
     lodash: {
